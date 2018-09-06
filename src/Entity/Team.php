@@ -27,9 +27,10 @@ class Team
     private $strip;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\League", inversedBy="teams")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $league_id;
+    private $league;
 
     public function getId(): ?int
     {
@@ -60,14 +61,14 @@ class Team
         return $this;
     }
 
-    public function getLeagueId(): ?int
+    public function getLeague(): ?League
     {
-        return $this->league_id;
+        return $this->league;
     }
 
-    public function setLeagueId(int $league_id): self
+    public function setLeague(?League $league): self
     {
-        $this->league_id = $league_id;
+        $this->league = $league;
 
         return $this;
     }

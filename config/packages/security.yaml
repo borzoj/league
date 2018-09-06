@@ -1,0 +1,19 @@
+security:
+    providers:
+        jwt_user_provider:
+            id: App\Security\JwtUserProvider
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            pattern: ^/
+            stateless: true
+            simple_preauth:
+                authenticator: App\Security\JwtAuthenticator
+                provider: jwt_user_provider
+
+    access_control:
+        - { path: ^/leagues, roles: ROLE_LEAGUES }
+        - { path: ^/teams, roles: [ROLE_TEAMS, ROLE_LEAGUES] }

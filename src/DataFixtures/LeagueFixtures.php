@@ -8,7 +8,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class LeagueFixtures extends Fixture
 {
-    const LEAGUES = [
+    const LEAGUE_NAMES = [
         1 => 'league one',
         2 => 'league two',
         3 => 'league three',
@@ -18,13 +18,12 @@ class LeagueFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        foreach (self::LEAGUES as $id => $name) {
+        foreach (self::LEAGUE_NAMES as $id => $name) {
             $league = new League();
-            $league->setId($id);
             $league->setName($name);
             $manager->persist($league);
+            $this->addReference('league_'.$id, $league);
         }
-
         $manager->flush();
     }
 }
